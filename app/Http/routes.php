@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/prueba', function () {
+    return \App\User::with('ovejas', 'ventas', 'detalle_ventas', 'crias_total')->get();
+});
+
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
