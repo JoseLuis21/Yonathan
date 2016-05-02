@@ -12,4 +12,9 @@ class DetalleVenta extends Model
      {
        return $this->belongsTo('App\User');
      }
+
+     public function venta()
+     {
+       return $this->belongsTo('App\Venta');
+     }
 }

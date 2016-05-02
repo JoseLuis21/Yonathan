@@ -12,4 +12,9 @@ class Venta extends Model
      {
        return $this->belongsTo('App\User');
      }
+
+     public function detalles_ventas()
+     {
+         return $this->hasMany('App\DetalleVenta');
+     }
 }
