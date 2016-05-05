@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\User;
 
 class UserController extends Controller
 {
@@ -13,9 +14,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
-        return view('users.index');
+        $users = User::get();
+        return view('users.index')->with('users', $users);
     }
 
     /**
@@ -36,7 +39,39 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+      $validator = \Validator::make($request->all(), [
+        'nombre'      => 'required|max:255',
+        'rut_dueno'   => 'required|max:12|unique:users',
+        'direccion'   => 'required|min:2',
+        'telefono'    => 'required|min:5',
+        'email'       => 'required|email|max:255|unique:users',
+        'password'    => 'required|min:6|confirmed',
+        'color_dueno' => 'required|min:2'
+      ]);
+
+      if($validator->fails()) {
+          return redirect('users/create')
+                      ->withErrors($validator)
+                      ->withInput();
+      }else {
+        $user = new User();
+        $user->nombre      = $request['nombre'];
+        $user->rut_dueno   = $request['rut_dueno'];
+        $user->direccion   = $request['direccion'];
+        $user->telefono    = $request['telefono'];
+        $user->email       = $request['email'];
+        $user->password    = bcrypt($request['password']);
+        $user->color_dueno = $request['color_dueno'];
+        $user->save();
+
+        
+        $users = User::get();
+        return view('users.index')->with('users', $users);
+      }
+
+
+
     }
 
     /**

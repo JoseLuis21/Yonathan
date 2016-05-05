@@ -9,7 +9,7 @@
   <!-- Default panel contents -->
   <div class="panel-heading">
     Listado de Usuarios
-    <button class="btn btn-default pull-right">Agregar</button>
+    {{ link_to(route('users.create'),"Agregar",array('class'=>'btn btn-default pull-right')) }}
   </div>
 
 
@@ -19,19 +19,26 @@
       <th>Rut</th>
       <th>Nombres</th>
       <th>Color</th>
-      <th>Opciones</th>
+      <th>Editar</th>
+      <th>Eliminar</th>
     </thead>
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>18427496-5</td>
-        <td>Nombres</td>
-        <td>Color</td>
-        <td>
-          <button type="button" name="button" class="btn btn-primary">Editar</button>
-          <button type="button" name="button" class="btn btn-info">Eliminar</button>
-        </td>
-      </tr>
+      @foreach($users as $user)
+        <tr>
+          <td>{{$user->id}}</td>
+          <td>{{$user->rut_dueno}}</td>
+          <td>{{$user->nombre}}</td>
+          <td>{{$user->color_dueno}}</td>
+          <td>
+            {{ link_to(route('users.edit', $user->id),"Editar",array('class'=>'btn btn-success')) }}
+          </td>
+          <td>
+            {!! Form::open(array('route' => array('users.destroy', $user->id), 'method' => 'DELETE', 'onsubmit' => 'return confirm("¿Desea borrar el Usuario?");')) !!}
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+          	{!! Form::close() !!}
+          </td>
+        </tr>
+      @endforeach
     </tbody>
   </table>
   </div>
