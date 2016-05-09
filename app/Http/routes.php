@@ -15,6 +15,7 @@ Route::group(['middleware' => 'auth'], function () {
         return view('panel');
     });
     Route::resource('users', 'UserController');
+    Route::resource('estado-ovejas', 'EstadosOvejasController');
 });
 
 Route::auth();
