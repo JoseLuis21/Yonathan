@@ -65,7 +65,7 @@ class UserController extends Controller
         $user->color_dueno = $request['color_dueno'];
         $user->save();
 
-        
+
         $users = User::get();
         return view('users.index')->with('users', $users);
       }
@@ -93,7 +93,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+      $users = User::find($id);
+      return view('users.edit')->with('users', $users);
     }
 
     /**
@@ -105,7 +106,35 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $validator = \Validator::make($request->all(), [
+        'nombre'      => 'required|max:255',
+        'rut_dueno'   => 'required|max:12|unique:users',
+        'direccion'   => 'required|min:2',
+        'telefono'    => 'required|min:5',
+        'email'       => 'required|email|max:255|unique:users',
+        'color_dueno' => 'required|min:2'
+      ]);
+
+      if($validator->fails()) {
+          return redirect('users/edit')
+                      ->withErrors($validator)
+                      ->withInput();
+      }else {
+        $user              = User::find($id);
+        $user->nombre      = $request['nombre'];
+        $user->rut_dueno   = $request['rut_dueno'];
+        $user->direccion   = $request['direccion'];
+        $user->telefono    = $request['telefono'];
+        $user->email       = $request['email'];
+        $user->password    = bcrypt($request['password']);
+        $user->color_dueno = $request['color_dueno'];
+        $user->save();
+
+
+        $users = User::get();
+        return view('users.index')->with('users', $users);
+      }
+
     }
 
     /**
@@ -116,6 +145,22 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $user    = User::find($id);
+
+
+      if(isset($user)) {
+        try {
+          $user->delete();
+          return redirect('users/');
+        } catch ( \Illuminate\Database\QueryException $e) {
+          if ($e->errorInfo[0] == 23000) {
+            return redirect()->back()->with('error', 'Usuario no puede ser eliminada por relaciones dependientes');
+          } else {
+            dd($e->errorInfo);
+          }
+        }
+      }
+
+
     }
 }
