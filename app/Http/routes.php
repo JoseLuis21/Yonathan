@@ -16,6 +16,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
     Route::resource('users', 'UserController');
     Route::resource('estado-ovejas', 'EstadosOvejasController');
+    Route::resource('crias-totales', 'CriasTotalesController');
 });
 
 Route::auth();

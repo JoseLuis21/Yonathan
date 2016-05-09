@@ -84,6 +84,7 @@
               <li class="{{ (\Request::route()->getName() == '') ? 'active' : '' }}"><a href="{{URL::to('/')}}">Inicio<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
               <li class="{{ (explode('.',\Request::route()->getName())[0] == 'users') ? 'active' : '' }}"><a href="{{URL::to('/users')}}">Usuarios<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
               <li class="{{ (explode('.',\Request::route()->getName())[0] == 'estado-ovejas') ? 'active' : '' }}"><a href="{{URL::to('/estado-ovejas')}}">Estado de Ovejas<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
+              <li class="{{ (explode('.',\Request::route()->getName())[0] == 'crias-totales') ? 'active' : '' }}"><a href="{{URL::to('/crias-totales')}}">Crias Totales<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
               <li ><a href="#">Tags<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tags"></span></a></li>
             </ul>
           </div>
