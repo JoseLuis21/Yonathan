@@ -22,6 +22,7 @@
       <th>Crias Hembra</th>
       <th>Estado</th>
       <th>Editar</th>
+      <th>Pariciones</th>
       <th>Eliminar</th>
     </thead>
     <tbody>
@@ -35,6 +36,9 @@
           <td>{{$ovejas->estado_oveja->estado}}</td>
           <td>
             {{ link_to(route('ovejas.edit', $ovejas->id),"Editar",array('class'=>'btn btn-success')) }}
+          </td>
+          <td>
+            {{ link_to(route('pariciones.show', $ovejas->id),"Pariciones",array('class'=>'btn btn-info')) }}
           </td>
           <td>
             {!! Form::open(array('route' => array('ovejas.destroy', $ovejas->id), 'method' => 'DELETE', 'onsubmit' => 'return confirm("¿Desea borrar esta Oveja?");')) !!}

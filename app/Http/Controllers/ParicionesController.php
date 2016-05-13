@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Paricion;
 
 class ParicionesController extends Controller
 {
@@ -15,7 +16,7 @@ class ParicionesController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -47,7 +48,9 @@ class ParicionesController extends Controller
      */
     public function show($id)
     {
-        //
+        $pariciones = Paricion::where('oveja_id', '=', $id);
+        return view('pariciones.show')
+                ->with('pariciones', $pariciones);
     }
 
     /**
