@@ -103,7 +103,7 @@ class CriasTotalesController extends Controller
       ]);
 
       if($validator->fails()) {
-          return redirect('crias-totales/create')
+          return redirect('crias-totales/edit')
                       ->withErrors($validator)
                       ->withInput();
       }else {
