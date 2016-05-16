@@ -8,8 +8,11 @@
   <div class="panel panel-primary">
   <!-- Default panel contents -->
   <div class="panel-heading">
+    {{ link_to(route('ovejas.index'),"Volver",array('class'=>'btn btn-info')) }}
+    
     Listado de Pariciones
-    {{ link_to(route('ovejas.create'),"Agregar",array('class'=>'btn btn-default pull-right')) }}
+
+    {{ link_to(route('pariciones.create', ['id_oveja'=>$id_oveja]),"Agregar",array('class'=>'btn btn-default pull-right')) }}
   </div>
 
 
@@ -28,7 +31,7 @@
       @foreach($pariciones as $paricion)
         <tr>
           <td>{{$paricion->oveja->numero_arete}}</td>
-          <td>{{$paricion->fecha_maternidad}}</td>
+          <td>{{$paricion->fecha_paricion}}</td>
           <td>{{$paricion->cantidad_machos}}</td>
           <td>{{$paricion->cantidad_hembras}}</td>
 
