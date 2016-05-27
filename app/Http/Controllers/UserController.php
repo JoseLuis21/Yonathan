@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\User;
+use App\CriasTotal;
 
 class UserController extends Controller
 {
@@ -64,6 +65,11 @@ class UserController extends Controller
         $user->password    = bcrypt($request['password']);
         $user->color_dueno = $request['color_dueno'];
         $user->save();
+
+        $crias = new CriasTotal();
+        $crias->user_id      = $user->id;
+        $crias->cantidad     = 0;
+        $crias->save();
 
 
         $users = User::get();

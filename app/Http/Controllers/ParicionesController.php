@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Paricion;
 use App\Oveja;
+use App\CriasTotal;
 
 class ParicionesController extends Controller
 {
@@ -45,21 +46,32 @@ class ParicionesController extends Controller
         'fecha_paricion' => 'required',
         'cantidad_machos' => 'required',
         'cantidad_hembras' => 'required',
-        'crias_muertas' => 'required',
-        'total_paricion' => 'required'
+        'crias_muertas' => 'required'
       ]);
 
       if($validator->fails()) {
         return back()->withErrors($validator)->withInput();
       }else {
+
+        $totalSum = ($request['cantidad_machos'] + $request['cantidad_hembras']) - $request['crias_muertas'];
+
         $paricion                   = new Paricion();
-        $paricion->oveja_id          = $request['oveja_id'];
-        $paricion->fecha_paricion = $request['fecha_paricion'];
-        $paricion->cantidad_machos      = $request['cantidad_machos'];
-        $paricion->cantidad_hembras     = $request['cantidad_hembras'];
-        $paricion->crias_muertas        = $request['crias_muertas'];
-        $paricion->total_paricion  = $request['total_paricion'];
+        $paricion->oveja_id         = $request['oveja_id'];
+        $paricion->fecha_paricion   = $request['fecha_paricion'];
+        $paricion->cantidad_machos  = $request['cantidad_machos'];
+        $paricion->cantidad_hembras = $request['cantidad_hembras'];
+        $paricion->crias_muertas    = $request['crias_muertas'];
+        $paricion->total_temp       = $totalSum;
+        $paricion->total_paricion   = $request['cantidad_machos'] + $request['cantidad_hembras'];
         $paricion->save();
+
+
+        //Despues de crearla sumar la cantidad  de Crias
+          $oveja = Oveja::find($request['oveja_id']);
+          $crias_total = CriasTotal::where('user_id', '=', $oveja->user_id )->first();
+          $crias_total->cantidad = $totalSum + $crias_total->cantidad;
+          $crias_total->save();
+        //Despues de crearla sumar la cantidad  de Crias
 
 
         return redirect()->route('pariciones.show', $request['oveja_id'] );
@@ -111,21 +123,48 @@ class ParicionesController extends Controller
         'fecha_paricion' => 'required',
         'cantidad_machos' => 'required',
         'cantidad_hembras' => 'required',
-        'crias_muertas' => 'required',
-        'total_paricion' => 'required'
+        'crias_muertas' => 'required'
       ]);
 
       if($validator->fails()) {
         return back()->withErrors($validator)->withInput();
       }else {
-        $paricion                   = Paricion::find($id);
+
+        $totalSum = ($request['cantidad_machos'] + $request['cantidad_hembras']) - $request['crias_muertas'];
+
+        $paricion  = Paricion::find($id);
+
+
+        //Despues de crearla sumar la cantidad  de Crias
+        $oveja = Oveja::find($request['oveja_id']);
+        $crias_total = CriasTotal::where('user_id', '=', $oveja->user_id )->first();
+        if($totalSum == $paricion->total_temp)
+        {
+
+        }elseif($totalSum > $paricion->total_temp)
+        {
+          $restaTotal = $totalSum - $paricion->total_temp;
+          $crias_total->cantidad = $crias_total->cantidad + $restaTotal;
+          $crias_total->save();
+
+        }elseif($totalSum < $paricion->total_temp)
+        {
+          $sumaTotal = $paricion->total_temp - $totalSum;
+          $crias_total->cantidad =$crias_total->cantidad - $sumaTotal;
+          $crias_total->save();
+        }
+        //Despues de crearla sumar la cantidad  de Crias
+
         $paricion->oveja_id         = $request['oveja_id'];
         $paricion->fecha_paricion   = $request['fecha_paricion'];
         $paricion->cantidad_machos  = $request['cantidad_machos'];
         $paricion->cantidad_hembras = $request['cantidad_hembras'];
         $paricion->crias_muertas    = $request['crias_muertas'];
-        $paricion->total_paricion   = $request['total_paricion'];
+        $paricion->total_temp       = $totalSum;
+        $paricion->total_paricion   = $request['cantidad_machos'] + $request['cantidad_hembras'];
         $paricion->save();
+
+
 
 
         return redirect()->route('pariciones.show', $request['oveja_id'] );

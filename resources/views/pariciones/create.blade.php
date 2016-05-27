@@ -89,7 +89,7 @@
             </div>
           </div>
 
-          <div class="form-group{{ $errors->has('total_paricion') ? ' has-error' : '' }}">
+          {{-- <div class="form-group{{ $errors->has('total_paricion') ? ' has-error' : '' }}">
             {{ Form::label('total_paricion', 'Total Parición:', array('class' => 'col-md-4 control-label')) }}
             <div class="col-md-6">
               {{ Form::text('total_paricion', old('total_paricion') , array('class' => 'form-control') ) }}
@@ -102,7 +102,7 @@
                 </span>
               @endif
             </div>
-          </div>
+          </div> --}}
 
 
             <div class="form-group">
