@@ -44,6 +44,10 @@ class User extends Authenticatable
         return $this->hasMany('App\DetalleVenta');
     }
 
+    public function venta()
+     {
+         return $this->belongsToMany('App\DetalleVenta');
+     }
     public function crias_total()
     {
        return $this->hasOne('App\CriasTotal');

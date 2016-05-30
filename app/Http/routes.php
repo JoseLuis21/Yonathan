@@ -19,6 +19,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('crias-totales', 'CriasTotalesController');
     Route::resource('ovejas', 'OvejasController');
     Route::resource('pariciones', 'ParicionesController');
+    Route::get('pariciones/{id}/pdf', 'ParicionesController@pdf');
+    Route::get('ventas/users', 'VentasController@users');
+    Route::resource('ventas', 'VentasController');
 });
 
 Route::auth();

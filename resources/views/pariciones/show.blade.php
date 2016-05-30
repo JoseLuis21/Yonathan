@@ -9,9 +9,9 @@
   <!-- Default panel contents -->
   <div class="panel-heading">
     {{ link_to(route('ovejas.index'),"Volver",array('class'=>'btn btn-info')) }}
-    
-    Listado de Pariciones
 
+    Listado de Pariciones
+    {{ link_to('pariciones/'.$id_oveja.'/pdf',"Exportar a PDF", array('class'=>'btn btn-default pull-right')) }}
     {{ link_to(route('pariciones.create', ['id_oveja'=>$id_oveja]),"Agregar",array('class'=>'btn btn-default pull-right')) }}
   </div>
 

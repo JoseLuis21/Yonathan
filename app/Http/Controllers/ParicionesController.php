@@ -21,6 +21,11 @@ class ParicionesController extends Controller
 
     }
 
+    public function pdf($id)
+    {
+      return $id;
+    }
+
     /**
      * Show the form for creating a new resource.
      *
