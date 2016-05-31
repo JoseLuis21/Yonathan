@@ -110,7 +110,7 @@
             <div class="form-group{{ $errors->has('color_dueno') ? ' has-error' : '' }}">
               {{ Form::label('color_dueno', 'Color del dueño:', array('class' => ' col-md-4 control-label')) }}
               <div class="col-md-6">
-                {{Form::password('color_dueno', array('class' => 'form-control')) }}
+                {{Form::text('color_dueno', null, array('class' => 'form-control')) }}
                 @if ($errors->has('color_dueno'))
                     <span class="help-block">
                         <strong>{{ $errors->first('color_dueno') }}</strong>

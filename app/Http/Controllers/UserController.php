@@ -44,7 +44,7 @@ class UserController extends Controller
 
       $validator = \Validator::make($request->all(), [
         'nombre'      => 'required|max:255',
-        'rut_dueno'   => 'required|max:12|unique:users',
+        'rut_dueno'   => 'required|cl_rut|max:12|unique:users',
         'direccion'   => 'required|min:2',
         'telefono'    => 'required|min:5',
         'email'       => 'required|email|max:255|unique:users',
@@ -133,7 +133,7 @@ class UserController extends Controller
     {
       $validator = \Validator::make($request->all(), [
         'nombre'      => 'required|max:255',
-        'rut_dueno'   => 'required|max:12|unique:users,id,'.$id,
+        'rut_dueno'   => 'required|cl_rut|max:12|unique:users,id,'.$id,
         'direccion'   => 'required|min:2',
         'telefono'    => 'required|min:5',
         'email'       => 'required|email|max:255|unique:users,id,'.$id,

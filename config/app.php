@@ -66,7 +66,7 @@ return [
     */
 
     'locale' => 'en',
-    
+
 
     /*
     |--------------------------------------------------------------------------
@@ -158,6 +158,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Freshwork\ChileanBundle\Laravel\ChileanBundleServiceProvider::class,
 
     ],
 
@@ -207,6 +208,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Rut'   => Freshwork\ChileanBundle\Laravel\Facades\Rut::class,
 
 
     ],
