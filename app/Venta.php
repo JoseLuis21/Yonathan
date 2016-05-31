@@ -16,7 +16,7 @@ class Venta extends Model
 
      public function users()
       {
-          return $this->belongsToMany('App\DetalleVenta', 'detalle_ventas', 'venta_id', 'user_id');
+          return $this->belongsToMany('App\DetalleVenta', 'detalle_ventas', 'venta_id', 'user_id', 'estado');
       }
 
      public function detalles_ventas()

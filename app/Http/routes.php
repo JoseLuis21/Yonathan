@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('pariciones/{id}/pdf', 'ParicionesController@pdf');
     Route::get('ventas/users', 'VentasController@users');
     Route::resource('ventas', 'VentasController');
+    Route::get('ventas/{id}/confirmar', 'VentasController@confirmar');
 });
 
 Route::auth();

@@ -5,7 +5,7 @@
   <div class="panel-heading"></div>
     <div class="panel panel-primary">
         <div class="panel-heading">
-            Crear Dueño
+            Crear Estado Oveja
         </div>
         <div class="panel-body">
           {!! Form::open(array('url' => 'estado-ovejas', 'class' => 'ui form')) !!}

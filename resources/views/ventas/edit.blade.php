@@ -5,7 +5,7 @@
 
     <div class="panel panel-primary">
         <div class="panel-heading">
-            Crear Ventas
+            Editar Venta
         </div>
         <div class="panel-body">
 {!! Form::open(array('route' => array('ventas.update', $ventas->id) , 'method' => 'put', 'class'=>'ui form')) !!}
@@ -67,7 +67,6 @@
           									       @if($users->isEmpty())
                 											<option value="{{$user->id}}"   {{($detalle->user_id == $user->id ? 'selected' : '')}}>{{$user->nombre}}</option>
                 										@else
-
                                       <option value="{{$user->id}}"   {{($detalle->user_id == $user->id ? 'selected' : '')}}>{{$user->nombre}}</option>
                 										@endif
                 							@endforeach

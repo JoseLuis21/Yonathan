@@ -18,7 +18,7 @@ class VentasController extends Controller
      */
     public function index()
     {
-        $ventas = Venta::get();
+        $ventas = Venta::where('estado', '<>', 'Inactivo')->get();
         return view('ventas.index')->with('ventas', $ventas);
     }
 
@@ -45,6 +45,7 @@ class VentasController extends Controller
         $venta->fecha   = $request->fecha;
         $venta->total   = $request->total;
         $venta->user_id = $request->user_id;
+        $venta->estado  = "Activo";
         $venta->save();
 
         $detalles = ($request->get('detalle')) ? $request->get('detalle') : [];
@@ -72,7 +73,15 @@ class VentasController extends Controller
      */
     public function show($id)
     {
-        //
+      $users = User::select('nombre', 'id')->get();
+      $usersSelect = User::lists('nombre', 'id');
+      $venta = Venta::find($id);
+
+
+      return view('ventas.show')
+              ->with('users', $users)
+              ->with('ventas', $venta)
+              ->with('usersSelect', $usersSelect);
     }
 
     /**
@@ -107,6 +116,7 @@ class VentasController extends Controller
         $venta->fecha   = $request->fecha;
         $venta->total   = $request->total;
         $venta->user_id = $request->user_id;
+        $venta->estado  = "Activo";
         $venta->save();
 
         $data = [];
@@ -136,7 +146,38 @@ class VentasController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $venta          = Venta::find($id);
+      if(isset($venta)) {
+        try {
+          $venta->estado = 'Inactivo';
+          $venta->save();
+          return redirect('ventas/');
+        } catch ( \Illuminate\Database\QueryException $e) {
+          if ($e->errorInfo[0] == 23000) {
+            return redirect()->back()->with('error', 'No puede ser eliminada por relaciones dependientes');
+          } else {
+            dd($e->errorInfo);
+          }
+        }
+      }
+    }
+
+    public function confirmar($id)
+    {
+      $venta          = Venta::find($id);
+      if(isset($venta)) {
+        try {
+          $venta->estado = 'Confirmada';
+          $venta->save();
+          return redirect('ventas/');
+        } catch ( \Illuminate\Database\QueryException $e) {
+          if ($e->errorInfo[0] == 23000) {
+            return redirect()->back()->with('error', 'No puede ser eliminada por relaciones dependientes');
+          } else {
+            dd($e->errorInfo);
+          }
+        }
+      }
     }
 
     public function users()

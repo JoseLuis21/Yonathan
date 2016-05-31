@@ -5,7 +5,7 @@
   <div class="panel-heading"></div>
     <div class="panel panel-primary">
         <div class="panel-heading">
-            Editar Estado Oveja
+            Editar Crias Totales
         </div>
         <div class="panel-body">
           {!! Form::open(array('route' => array('crias-totales.update', $criasTotal->id) , 'method' => 'put', 'class'=>'ui form')) !!}

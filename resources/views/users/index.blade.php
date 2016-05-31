@@ -8,7 +8,7 @@
   <div class="panel panel-primary">
   <!-- Default panel contents -->
   <div class="panel-heading">
-    Listado de Usuarios
+    Listado de Dueños
     {{ link_to(route('users.create'),"Agregar",array('class'=>'btn btn-default pull-right')) }}
   </div>
 

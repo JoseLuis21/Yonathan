@@ -26,14 +26,33 @@
           <td>{{$venta->fecha}}</td>
           <td>{{$venta->total}}</td>
           <td>{{$venta->user->nombre}}</td>
-          <td>
-            {{ link_to(route('ventas.edit', $venta->id),"Editar",array('class'=>'btn btn-success')) }}
-          </td>
+          @if($venta->estado == "Activo")
+            <td>
+              {{ link_to(route('ventas.edit', $venta->id),"Editar",array('class'=>'btn btn-success')) }}
+            </td>
+          @else
+            <td>
+              <button type="button" disabled class="btn btn-success">Editar</button>
+            </td>
+          @endif
           <td>
             {!! Form::open(array('route' => array('ventas.destroy', $venta->id), 'method' => 'DELETE', 'onsubmit' => 'return confirm("¿Desea borrar esta Venta?");')) !!}
-                <button type="submit" class="btn btn-danger">Eliminar</button>
+                <button type="submit" {{($venta->estado != 'Activo' ? 'disabled'   : '')}} class="btn btn-danger">Eliminar</button>
             {!! Form::close() !!}
           </td>
+          @if($venta->estado == "Activo")
+            <td>
+              <a href="/ventas/{{$venta->id}}/confirmar" onClick='return confirm("¿Desea Confirmar esta Venta?");' class="btn btn-warning">Confirmar</a>
+            </td>
+          @else
+            <td>
+              <button disabled class="btn btn-warning">Confirmar</a>
+            </td>
+          @endif
+          <td>
+            {{ link_to(route('ventas.show', $venta->id),"Ver",array('class'=>'btn btn-primary')) }}
+          </td>
+
         </tr>
       @endforeach
     </tbody>

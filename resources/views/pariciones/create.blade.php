@@ -15,7 +15,7 @@
           <div class="form-group{{ $errors->has('oveja_id') ? ' has-error' : '' }}">
             {{ Form::label('oveja_id', 'Oveja:', array('class' => 'col-md-4 control-label')) }}
             <div class="col-md-6">
-              {{ Form::select('oveja_id', $ovejas, \Request::get('id_oveja'), ['class' => 'form-control', 'readonly' => true]) }}
+              {{ Form::select('oveja_id', $ovejas, \Request::get('id_oveja'), ['class' => 'form-control', 'disabled' => 'true']) }}
               @if ($errors->has('oveja_id'))
                   <span class="help-block">
                       <strong>{{ $errors->first('oveja_id') }}</strong>
