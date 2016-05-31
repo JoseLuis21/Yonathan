@@ -23,7 +23,11 @@ class ParicionesController extends Controller
 
     public function pdf($id)
     {
-      return $id;
+      $pariciones = Paricion::where('oveja_id', '=', $id)->get();
+      $oveja = $id;
+      $data = ['pariciones' => $pariciones, 'id_oveja'=> $oveja];
+      $pdf = \PDF::loadView('pariciones.pdf', $data);
+      return $pdf->stream('pariciones.pdf');
     }
 
     /**
@@ -96,6 +100,7 @@ class ParicionesController extends Controller
         return view('pariciones.show')
                 ->with('pariciones', $pariciones)
                 ->with('id_oveja', $oveja);
+
     }
 
     /**

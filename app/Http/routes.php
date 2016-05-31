@@ -19,10 +19,21 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('crias-totales', 'CriasTotalesController');
     Route::resource('ovejas', 'OvejasController');
     Route::resource('pariciones', 'ParicionesController');
+
+    //PDF
+
     Route::get('pariciones/{id}/pdf', 'ParicionesController@pdf');
+    Route::get('users/{id}/pdf', 'UserController@pdf');
+
+    //PDF
+    
     Route::get('ventas/users', 'VentasController@users');
     Route::resource('ventas', 'VentasController');
     Route::get('ventas/{id}/confirmar', 'VentasController@confirmar');
+
+    //Reportes
+
+
 });
 
 Route::auth();

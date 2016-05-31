@@ -185,4 +185,5 @@ class VentasController extends Controller
       $users = User::select('id', 'nombre')->get();
       return response()->json($users);
     }
+
 }

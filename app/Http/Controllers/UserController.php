@@ -16,9 +16,10 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::get();
+
+        $users = User::where('estado', '=', 'Activo')->where('rut_dueno', 'LIKE', '%'.$request->get('search_rut').'%')->get();
         return view('users.index')->with('users', $users);
     }
 
@@ -103,6 +104,24 @@ class UserController extends Controller
       return view('users.edit')->with('users', $users);
     }
 
+
+    public function pdf($id)
+    {
+      if($id != "0")
+      {
+        $users = User::where('estado', '=', 'Activo')->where('rut_dueno', 'LIKE', '%'.$id.'%')->get();
+      }else {
+        $users = User::where('estado', '=', 'Activo')->get();
+      }
+
+      $data = ['users' => $users];
+      $pdf = \PDF::loadView('users.pdf', $data);
+      return $pdf->stream('users.pdf');
+
+
+      // return view('users.index')->with('users', $users);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -114,15 +133,15 @@ class UserController extends Controller
     {
       $validator = \Validator::make($request->all(), [
         'nombre'      => 'required|max:255',
-        'rut_dueno'   => 'required|max:12|unique:users',
+        'rut_dueno'   => 'required|max:12|unique:users,id,'.$id,
         'direccion'   => 'required|min:2',
         'telefono'    => 'required|min:5',
-        'email'       => 'required|email|max:255|unique:users',
+        'email'       => 'required|email|max:255|unique:users,id,'.$id,
         'color_dueno' => 'required|min:2'
       ]);
 
       if($validator->fails()) {
-          return redirect('users/edit')
+          return redirect('users/'.$id.'/edit')
                       ->withErrors($validator)
                       ->withInput();
       }else {
@@ -152,11 +171,10 @@ class UserController extends Controller
     public function destroy($id)
     {
       $user    = User::find($id);
-
-
       if(isset($user)) {
         try {
-          $user->delete();
+          $user->estado = "Inactivo";
+          $user->save();
           return redirect('users/');
         } catch ( \Illuminate\Database\QueryException $e) {
           if ($e->errorInfo[0] == 23000) {

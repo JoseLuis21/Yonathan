@@ -2,14 +2,34 @@
 
 @section('content')
 
-  {{-- <button type="button" name="button" class="btn btn-success pull-right">Agregar</button> --}}
-  <br>
+ <br>
+ {!! Form::open(array('route' => 'users.index', 'method' => 'GET', 'class' => 'form', 'role'=>'search')) !!}
+  <div class="col-lg-6">
+   <div class="input-group">
+     {{ Form::text('search_rut', old('search_rut') , array('class' => 'form-control', 'placeholder' => 'Buscar por rut') ) }}
+     <span class="input-group-btn">
+      {{Form::submit('Buscar', array('class'=> 'btn btn-primary btn-block'))}}
+     </span>
+     <span class="input-group-btn">
+      {{Form::submit('Todo', array('class'=> 'btn btn-default btn-block'))}}
+     </span>
+   </div><!-- /input-group -->
+ </div><!-- /.col-lg-6 -->
+ {!! Form::close() !!}
+ <br>
+
   <div class="panel-heading"></div>
   <div class="panel panel-primary">
   <!-- Default panel contents -->
   <div class="panel-heading">
     Listado de Dueños
     {{ link_to(route('users.create'),"Agregar",array('class'=>'btn btn-default pull-right')) }}
+    @if(\Request::get('search_rut') != "")
+        {{ link_to('users/'.\Request::get('search_rut').'/pdf',"Exportar a PDF", array('class'=>'btn btn-default pull-right', 'target' => '_blank')) }}
+    @else
+      {{ link_to('users/0/pdf',"Exportar a PDF", array('class'=>'btn btn-default pull-right', 'target' => '_blank')) }}
+    @endif
+
   </div>
 
 

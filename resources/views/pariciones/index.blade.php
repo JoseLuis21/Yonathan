@@ -10,7 +10,7 @@
   <div class="panel-heading">
     Listado de Pariciones
     {{ link_to(route('crias-totales.create'),"Agregar",array('class'=>'btn btn-default pull-right')) }}
-    {{ link_to(route('crias-totales.pdf'),"Exportar a PDF",array('class'=>'btn btn-default pull-right')) }}
+    {{ link_to(route('crias-totales.pdf'), "Exportar a PDF",array('class'=>'btn btn-default pull-right')) }}
   </div>
 
 
