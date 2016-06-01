@@ -16,15 +16,33 @@ class OvejasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-      $ovejas = Oveja::get();
+
+      $ovejas = Oveja::where('numero_arete', 'LIKE', '%'.$request->get('search_arete').'%')->get();
       $estadoOvejas = EstadoOveja::lists('estado', 'id');
       $users = User::lists('nombre', 'id');
       return view('ovejas.index')
               ->with('users', $users)
               ->with('estadoOvejas', $estadoOvejas)
               ->with('ovejas', $ovejas);
+    }
+
+    public function pdf($id)
+    {
+      if($id != "0")
+      {
+        $ovejas = Oveja::where('numero_arete', 'LIKE', '%'.$request->get('search_arete').'%')->get();
+      }else {
+        $ovejas = Oveja::get();
+      }
+
+      $data = ['ovejas' => $ovejas];
+      $pdf = \PDF::loadView('ovejas.pdf', $data);
+      return $pdf->stream('ovejas.pdf');
+
+
+      // return view('users.index')->with('users', $users);
     }
 
     /**

@@ -4,12 +4,32 @@
 
   {{-- <button type="button" name="button" class="btn btn-success pull-right">Agregar</button> --}}
   <br>
+  {!! Form::open(array('route' => 'ovejas.index', 'method' => 'GET', 'class' => 'form', 'role'=>'search')) !!}
+   <div class="col-lg-6">
+    <div class="input-group">
+      {{ Form::text('search_arete', old('search_arete') , array('class' => 'form-control', 'placeholder' => 'Buscar por Arete') ) }}
+      <span class="input-group-btn">
+       {{Form::submit('Buscar', array('class'=> 'btn btn-primary btn-block'))}}
+      </span>
+      <span class="input-group-btn">
+       {{Form::submit('Todo', array('class'=> 'btn btn-default btn-block'))}}
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+  {!! Form::close() !!}
+  <br>
+
   <div class="panel-heading"></div>
   <div class="panel panel-primary">
   <!-- Default panel contents -->
   <div class="panel-heading">
     Listado de Ovejas
     {{ link_to(route('ovejas.create'),"Agregar",array('class'=>'btn btn-default pull-right')) }}
+    @if(\Request::get('search_rut') != "")
+        {{ link_to('ovejas/'.\Request::get('search_arete').'/pdf',"Exportar a PDF", array('class'=>'btn btn-default pull-right', 'target' => '_blank')) }}
+    @else
+      {{ link_to('ovejas/0/pdf',"Exportar a PDF", array('class'=>'btn btn-default pull-right', 'target' => '_blank')) }}
+    @endif
   </div>
 
 

@@ -37,7 +37,7 @@
     }
   </style>
   <body>
-    <table class="table table-bordered">
+    <table style="width:100%;" class="table table-bordered">
       <tr>
         <td>id</td>
         <td>Rut</td>

@@ -37,24 +37,20 @@
     }
   </style>
   <body>
-    <table style="width:100%;" class="table table-bordered">
+    <table style="width:100%;" class="table table-bordered table-hover">
       <tr>
-        <td>Oveja</td>
-        <td>Fecha Maternidad</td>
-        <td>Cantidad Macho</td>
-        <td>Cantidad Hembra</td>
-        <td>Crias M</td>
-        <td>Total Crias</td>
+        <td>Numero</td>
+        <td>Fecha</td>
+        <td>Total</td>
+        <td>Usuario</td>
       </tr>
       <tbody>
-        @foreach($pariciones as $paricion)
+        @foreach($ventas as $venta)
           <tr>
-            <td>{{$paricion->oveja->numero_arete}}</td>
-            <td>{{$paricion->fecha_paricion}}</td>
-            <td>{{$paricion->cantidad_machos}}</td>
-            <td>{{$paricion->cantidad_hembras}}</td>
-            <td>{{$paricion->crias_muertas}}</td>
-            <td>{{$paricion->total_paricion}}</td>
+            <td>{{$venta->id}}</td>
+            <td>{{$venta->fecha}}</td>
+            <td>{{$venta->total}}</td>
+            <td>{{$venta->user->nombre}}</td>
           </tr>
         @endforeach
       </tbody>

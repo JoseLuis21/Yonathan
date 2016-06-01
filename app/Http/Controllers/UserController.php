@@ -18,7 +18,6 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-
         $users = User::where('estado', '=', 'Activo')->where('rut_dueno', 'LIKE', '%'.$request->get('search_rut').'%')->get();
         return view('users.index')->with('users', $users);
     }

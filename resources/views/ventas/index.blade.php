@@ -3,11 +3,27 @@
 @section('content')
 
   <br>
+  {!! Form::open(array('route' => 'ventas.index', 'method' => 'GET', 'class' => 'form-inline', 'role'=>'search')) !!}
+      <div class="form-group">
+      Desde: {{ Form::date('search_date1', old('search_date1') , array('class' => 'form-control', 'placeholder' => 'Buscar por fecha desde', 'required' => 'true') ) }}
+      </div>
+      <div class="form-group">
+      Hasta: {{ Form::date('search_date2', old('search_date2') , array('class' => 'form-control', 'placeholder' => 'Buscar por fecha hasta', 'required' => 'true') ) }}
+      </div>
+      {{Form::submit('Buscar', array('class'=> 'btn btn-primary '))}}
+      {{Form::submit('Todo', array('class'=> 'btn btn-default '))}}
+  {!! Form::close() !!}
+
   <div class="panel-heading"></div>
   <div class="panel panel-primary">
   <div class="panel-heading">
     Listado de Ventas
     {{ link_to(route('ventas.create'),"Agregar",array('class'=>'btn btn-default pull-right')) }}
+    @if(\Request::get('search_date1') != "")
+        {{ link_to('ventas/'.\Request::get('search_date1').'/pdf/'.\Request::get('search_date2').'',"Exportar a PDF", array('class'=>'btn btn-default pull-right', 'target' => '_blank')) }}
+    @else
+      {{ link_to('ventas/0/pdf',"Exportar a PDF", array('class'=>'btn btn-default pull-right', 'target' => '_blank')) }}
+    @endif
   </div>
 
   <table class="table table-bordered table-hover table-condensed">

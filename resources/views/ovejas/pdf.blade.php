@@ -37,24 +37,24 @@
     }
   </style>
   <body>
-    <table style="width:100%;" class="table table-bordered">
+    <table style="width:100%;" class="table table-bordered table-hover table-condensed">
       <tr>
-        <td>Oveja</td>
+        <td>Numero Arete</td>
+        <td>Dueño</td>
         <td>Fecha Maternidad</td>
-        <td>Cantidad Macho</td>
-        <td>Cantidad Hembra</td>
-        <td>Crias M</td>
-        <td>Total Crias</td>
+        <td>Crias Macho</td>
+        <td>Crias Hembra</td>
+        <td>Estado</td>
       </tr>
       <tbody>
-        @foreach($pariciones as $paricion)
+        @foreach($ovejas as $ovejas)
           <tr>
-            <td>{{$paricion->oveja->numero_arete}}</td>
-            <td>{{$paricion->fecha_paricion}}</td>
-            <td>{{$paricion->cantidad_machos}}</td>
-            <td>{{$paricion->cantidad_hembras}}</td>
-            <td>{{$paricion->crias_muertas}}</td>
-            <td>{{$paricion->total_paricion}}</td>
+            <td>{{$ovejas->numero_arete}}</td>
+            <td>{{$ovejas->user->nombre}}</td>
+            <td>{{$ovejas->fecha_maternidad}}</td>
+            <td>{{$ovejas->crias_macho}}</td>
+            <td>{{$ovejas->crias_hembra}}</td>
+            <td>{{$ovejas->estado_oveja->estado}}</td>
           </tr>
         @endforeach
       </tbody>

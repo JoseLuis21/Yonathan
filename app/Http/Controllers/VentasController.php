@@ -16,10 +16,31 @@ class VentasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $ventas = Venta::where('estado', '<>', 'Inactivo')->get();
+        if($request->get('search_date1')!="")
+        {
+          $ventas = Venta::where('estado', '<>', 'Inactivo')->whereBetween('fecha', [$request->get('search_date1'), $request->get('search_date2')])->get();
+        }else {
+          $ventas = Venta::where('estado', '<>', 'Inactivo')->get();
+        }
+
         return view('ventas.index')->with('ventas', $ventas);
+    }
+
+
+    public function pdf($fecha1, $fecha2)
+    {
+      if($fecha1 != "")
+      {
+        $ventas = Venta::where('estado', '<>', 'Inactivo')->whereBetween('fecha', [$fecha1, $fecha2])->get();
+      }else {
+        $ventas = Venta::where('estado', '<>', 'Inactivo')->get();
+      }
+
+      $data = ['ventas' => $ventas];
+      $pdf = \PDF::loadView('ventas.pdf', $data);
+      return $pdf->stream('ventas.pdf');
     }
 
     /**
