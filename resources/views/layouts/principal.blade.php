@@ -70,28 +70,33 @@
 
 <div class="row">
   <div class="col-md-2">
-    <nav class="navbar navbar-default sidebar" role="navigation">
-          <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
+    @if(Auth::user()->id != "1")
+      
+    @else
+      <nav class="navbar navbar-default sidebar" role="navigation">
+            <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-sidebar-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li class="{{ (\Request::route()->getName() == '') ? 'active' : '' }}"><a href="{{URL::to('/')}}">Inicio<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
+                <li class="{{ (explode('.',\Request::route()->getName())[0] == 'users') ? 'active' : '' }}"><a href="{{URL::to('/users')}}">Usuarios<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
+                <li class="{{ (explode('.',\Request::route()->getName())[0] == 'estado-ovejas') ? 'active' : '' }}"><a href="{{URL::to('/estado-ovejas')}}">Estado de Ovejas<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
+                <li class="{{ (explode('.',\Request::route()->getName())[0] == 'crias-totales') ? 'active' : '' }}"><a href="{{URL::to('/crias-totales')}}">Crias Totales<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
+                <li class="{{ (explode('.',\Request::route()->getName())[0] == 'ovejas') ? 'active' : '' }}"><a href="{{URL::to('/ovejas')}}">Ovejas<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
+                <li class="{{ (explode('.',\Request::route()->getName())[0] == 'ventas') ? 'active' : '' }}"><a href="{{URL::to('/ventas')}}">Ventas<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
+              </ul>
+            </div>
           </div>
-          <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-              <li class="{{ (\Request::route()->getName() == '') ? 'active' : '' }}"><a href="{{URL::to('/')}}">Inicio<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-home"></span></a></li>
-              <li class="{{ (explode('.',\Request::route()->getName())[0] == 'users') ? 'active' : '' }}"><a href="{{URL::to('/users')}}">Usuarios<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
-              <li class="{{ (explode('.',\Request::route()->getName())[0] == 'estado-ovejas') ? 'active' : '' }}"><a href="{{URL::to('/estado-ovejas')}}">Estado de Ovejas<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
-              <li class="{{ (explode('.',\Request::route()->getName())[0] == 'crias-totales') ? 'active' : '' }}"><a href="{{URL::to('/crias-totales')}}">Crias Totales<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
-              <li class="{{ (explode('.',\Request::route()->getName())[0] == 'ovejas') ? 'active' : '' }}"><a href="{{URL::to('/ovejas')}}">Ovejas<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
-              <li class="{{ (explode('.',\Request::route()->getName())[0] == 'ventas') ? 'active' : '' }}"><a href="{{URL::to('/ventas')}}">Ventas<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-th-list"></span></a></li>
-            </ul>
-          </div>
-        </div>
-    </nav>
+      </nav>
+    @endif
+
 
   </div>
 

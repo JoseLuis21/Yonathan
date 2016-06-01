@@ -33,7 +33,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('ventas', 'VentasController');
     Route::get('ventas/{id}/confirmar', 'VentasController@confirmar');
 
-    //Reportes
+    //Resumen
+    Route::resource('resumen', 'ResumenController');
+
 
 
 });
