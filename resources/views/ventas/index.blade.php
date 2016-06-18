@@ -22,7 +22,7 @@
     @if(\Request::get('search_date1') != "")
         {{ link_to('ventas/'.\Request::get('search_date1').'/pdf/'.\Request::get('search_date2').'',"Exportar a PDF", array('class'=>'btn btn-default pull-right', 'target' => '_blank')) }}
     @else
-      {{ link_to('ventas/0/pdf',"Exportar a PDF", array('class'=>'btn btn-default pull-right', 'target' => '_blank')) }}
+      {{ link_to('ventas/0/pdf/0',"Exportar a PDF", array('class'=>'btn btn-default pull-right', 'target' => '_blank')) }}
     @endif
   </div>
 

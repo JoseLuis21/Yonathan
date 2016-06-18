@@ -31,7 +31,7 @@ class VentasController extends Controller
 
     public function pdf($fecha1, $fecha2)
     {
-      if($fecha1 != "")
+      if($fecha1 != "0")
       {
         $ventas = Venta::where('estado', '<>', 'Inactivo')->whereBetween('fecha', [$fecha1, $fecha2])->get();
       }else {
