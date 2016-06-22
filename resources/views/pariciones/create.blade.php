@@ -15,7 +15,7 @@
           <div class="form-group{{ $errors->has('oveja_id') ? ' has-error' : '' }}">
             {{ Form::label('oveja_id', 'Oveja:', array('class' => 'col-md-4 control-label')) }}
             <div class="col-md-6">
-              {{ Form::text('oveja_ids', \Request::get('id_oveja'), ['class' => 'form-control', 'disabled' => 'true']) }}
+              {{ Form::text('oveja_ids', \DB::table('ovejas')->where('id', \Request::get('id_oveja'))->first()->numero_arete, ['class' => 'form-control', 'disabled' => 'true']) }}
               <input type="hidden" name="oveja_id" value="{{\Request::get('id_oveja')}}"/>
               @if ($errors->has('oveja_id'))
                   <span class="help-block">

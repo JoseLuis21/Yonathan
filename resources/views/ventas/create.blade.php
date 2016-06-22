@@ -52,6 +52,7 @@
                 <table class="table table-bordered table-condensed tbl-details" >
                   <thead>
                     <th>Dueño</th>
+                    <th>Stock</th>
                     <th>Cantidad Crias</th>
                     <th>Detalle</th>
                     <th>Precio</th>
@@ -95,7 +96,7 @@
     <div class="col-md-1 pull-right">
     </div>
     <div class="col-md-1 pull-right">
-      {{Form::submit('Guardar', array('class'=> 'btn btn-primary btn-block'))}}
+      {{Form::submit('Guardar', array('class'=> 'btn btn-primary btn-block btn-guardar'))}}
       <span class="help-block">
       </span>
     </div>
@@ -129,7 +130,9 @@
           url: "/ventas/users"
         })
           .done(function(result) {
-            context.users = result;
+            console.log(result);
+            context.users = result[0];
+            context.criasTotales = result[1];
             var html    = template(context);
             $(".tbl-details > tbody").append(html);
             general.eliminar_item();
@@ -144,15 +147,31 @@
       general = (function () {
           calcular = function(){
             $('table.tbl-details').delegate('input,select', 'change', function () {
+
+
                 var totalSuma = 0;
                 var self = $(this);
                 var tr = self.closest('tr');
 
                 //valores
+                var usuario = tr.find('.usuario').val();
+                tr.find('.criastotal').val(usuario);
+
                 var cantidad = tr.find('.cantidad').val();
                 var precio = tr.find('.precio').val();
                 var total = tr.find('.total').val();
                 var totalVenta = $(".total-venta").val();
+
+                var criastotal = tr.find('.criastotal option:selected').attr('data-stock');
+
+
+                if(criastotal < cantidad)
+                {
+                  $(".btn-guardar").attr("disabled", true);
+                  alert("La cantidad supera el maximo");
+                }else {
+                  $(".btn-guardar").attr("disabled", false);
+                }
 
                 //setear Valores
                 tr.find('.total').val(cantidad * precio);

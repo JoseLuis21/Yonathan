@@ -1,9 +1,16 @@
 <script id="entry-template" type="text/x-handlebars-template">
 <tr id="tr-{{indice}}">
   <td>
-    <select class="form-control" name="detalle[{{indice}}][user_id]">
+    <select class="form-control usuario" name="detalle[{{indice}}][user_id]">
       {{#each users}}
         <option value="{{this.id}}" >{{this.nombre}}</option>
+      {{/each}}
+    </select>
+  </td>
+  <td>
+    <select class="form-control criastotal" disabled name="detalle[{{indice}}][user_id]">
+      {{#each criasTotales}}
+        <option value="{{this.user_id}}" data-stock="{{this.cantidad}}" >{{this.cantidad}}</option>
       {{/each}}
     </select>
   </td>

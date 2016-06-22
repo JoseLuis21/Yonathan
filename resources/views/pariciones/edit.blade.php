@@ -13,7 +13,8 @@
                     <div class="form-group{{ $errors->has('oveja_id') ? ' has-error' : '' }}">
                       {{ Form::label('oveja_id', 'Oveja:', array('class' => 'col-md-4 control-label')) }}
                       <div class="col-md-6">
-                        {{ Form::select('oveja_id', $ovejas, $paricion->oveja_id, ['class' => 'form-control', 'disabled' => 'disabled']) }}
+                        {{ Form::text('oveja_ids', \DB::table('ovejas')->where('id', $paricion->oveja_id)->first()->numero_arete, ['class' => 'form-control', 'disabled' => 'true']) }}
+                        <input type="hidden" name="oveja_id" value="{{$paricion->oveja_id}}"/>
                         @if ($errors->has('oveja_id'))
                             <span class="help-block">
                                 <strong>{{ $errors->first('oveja_id') }}</strong>

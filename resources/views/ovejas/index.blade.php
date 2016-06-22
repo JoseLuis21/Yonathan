@@ -40,6 +40,7 @@
       <th>Fecha Maternidad</th>
       <th>Crias Macho</th>
       <th>Crias Hembra</th>
+      <th>Historico</th>
       <th>Estado</th>
       <th>Editar</th>
       <th>Pariciones</th>
@@ -53,6 +54,7 @@
           <td>{{$ovejas->fecha_maternidad}}</td>
           <td>{{$ovejas->crias_macho}}</td>
           <td>{{$ovejas->crias_hembra}}</td>
+          <td>{{$ovejas->historico}}</td>
           <td>{{$ovejas->estado_oveja->estado}}</td>
           <td>
             {{ link_to(route('ovejas.edit', $ovejas->id),"Editar",array('class'=>'btn btn-success')) }}

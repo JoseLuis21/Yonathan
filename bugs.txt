@@ -1,0 +1,7 @@
+* Solucion de ingreso de usuarios con estado vacio
+* Solucion de Redireccion en agregar usuarios
+* Solucion de Redireccion en editar usuarios
+* Solucion para que aparezca el numero de arete en vez del ID en el agregar pariciones
+* Solucion para que aparezca el numero de arete en vez del ID en el editar pariciones
+* Solucion para que aparezca dueños en ves de usuarios en el menu
+* Solucion para que se modifique el historico y las crias macho y hembras

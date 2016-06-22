@@ -52,6 +52,7 @@
                 <table class="table table-bordered table-condensed tbl-details" >
                   <thead>
                     <th>Dueño</th>
+                    <th>Stock</th>
                     <th>Cantidad Crias</th>
                     <th>Detalle</th>
                     <th>Precio</th>
@@ -62,12 +63,23 @@
                     @foreach($ventas->detalles_ventas as $key=>$detalle)
                       <tr id="tr-{{$key}}">
                         <td>
-                          <select class="form-control" name="detalle[{{$key}}][user_id]">
+                          <select class="form-control usuario" name="detalle[{{$key}}][user_id]">
                 							@foreach($users as $user)
           									       @if($users->isEmpty())
                 											<option value="{{$user->id}}"   {{($detalle->user_id == $user->id ? 'selected' : '')}}>{{$user->nombre}}</option>
                 										@else
                                       <option value="{{$user->id}}"   {{($detalle->user_id == $user->id ? 'selected' : '')}}>{{$user->nombre}}</option>
+                										@endif
+                							@endforeach
+                          </select>
+                        </td>
+                        <td>
+                          <select class="form-control criastotal" name="detalle[{{$key}}][user_id]">
+                							@foreach($criasTotales as $criasTotal)
+          									       @if($criasTotales->isEmpty())
+                											<option value="{{$criasTotal->user_id}}" data-stock="{{$criasTotal->cantidad}}"   {{($detalle->user_id == $criasTotal->user_id ? 'selected' : '')}}>{{$criasTotal->cantidad}}</option>
+                										@else
+                                      <option value="{{$criasTotal->user_id}}" data-stock="{{$criasTotal->cantidad}}"   {{($detalle->user_id == $criasTotal->user_id ? 'selected' : '')}}>{{$criasTotal->cantidad}}</option>
                 										@endif
                 							@endforeach
                           </select>
@@ -126,7 +138,7 @@
     <div class="col-md-1 pull-right">
     </div>
     <div class="col-md-1 pull-right">
-      {{Form::submit('Guardar', array('class'=> 'btn btn-primary btn-block'))}}
+      {{Form::submit('Guardar', array('class'=> 'btn btn-primary btn-block btn-guardar'))}}
       <span class="help-block">
       </span>
     </div>
@@ -167,7 +179,8 @@
           url: "/ventas/users"
         })
           .done(function(result) {
-            context.users = result;
+            context.users = result[0];
+            context.criasTotales = result[1];
             var html    = template(context);
             $(".tbl-details > tbody").append(html);
             general.eliminar_item();
@@ -187,10 +200,24 @@
                 var tr = self.closest('tr');
 
                 //valores
+                var usuario = tr.find('.usuario').val();
+                tr.find('.criastotal').val(usuario);
+
                 var cantidad = tr.find('.cantidad').val();
                 var precio = tr.find('.precio').val();
                 var total = tr.find('.total').val();
                 var totalVenta = $(".total-venta").val();
+
+                var criastotal = tr.find('.criastotal option:selected').attr('data-stock');
+
+                console.log("hola");
+                if(criastotal < cantidad)
+                {
+                  $(".btn-guardar").attr("disabled", true);
+                  alert("La cantidad supera el maximo");
+                }else {
+                  $(".btn-guardar").attr("disabled", false);
+                }
 
                 //setear Valores
                 tr.find('.total').val(cantidad * precio);
@@ -260,11 +287,13 @@
       })();
 
 
-
+      $('table.tbl-details select').trigger('change');
       general.calcular();
       general.eliminar_item();
       general.onlyNumber(".cantidad");
       general.onlyNumber(".precio");
+
+
       //Luego de cargar todo
 
 

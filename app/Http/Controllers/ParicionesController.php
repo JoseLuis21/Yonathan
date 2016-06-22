@@ -77,10 +77,13 @@ class ParicionesController extends Controller
 
         //Despues de crearla sumar la cantidad  de Crias
           $oveja = Oveja::find($request['oveja_id']);
+          $oveja->crias_macho = $oveja->crias_macho + $request['cantidad_machos'];
+          $oveja->crias_hembra = $oveja->crias_hembra + $request['cantidad_hembras'];
+          $oveja->historico = $oveja->historico + $totalSum;
           $crias_total = CriasTotal::where('user_id', '=', $oveja->user_id)->first();
           $crias_total->cantidad = $totalSum + $crias_total->cantidad;
-          
           $crias_total->save();
+          $oveja->save();
         //Despues de crearla sumar la cantidad  de Crias
 
 

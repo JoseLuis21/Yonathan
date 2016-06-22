@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Venta;
 use App\User;
 use App\DetalleVenta;
-
+use App\CriasTotal;
 class VentasController extends Controller
 {
     /**
@@ -113,14 +113,15 @@ class VentasController extends Controller
      */
     public function edit($id)
     {
-      $users = User::select('nombre', 'id')->get();
+      $users = User::select('nombre', 'id')->where('estado', '=', 'Activo')->get();
       $usersSelect = User::lists('nombre', 'id');
       $venta = Venta::find($id);
-
+      $criasTotales = CriasTotal::get();
 
       return view('ventas.edit')
               ->with('users', $users)
               ->with('ventas', $venta)
+              ->with('criasTotales', $criasTotales)
               ->with('usersSelect', $usersSelect);
     }
 
@@ -203,8 +204,9 @@ class VentasController extends Controller
 
     public function users()
     {
-      $users = User::select('id', 'nombre')->get();
-      return response()->json($users);
+      $users = User::select('id', 'nombre')->where('estado', '=', 'Activo')->get();
+      $criasTotales = CriasTotal::get();
+      return response()->json([$users, $criasTotales]);
     }
 
 }

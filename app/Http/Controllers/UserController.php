@@ -64,6 +64,7 @@ class UserController extends Controller
         $user->email       = $request['email'];
         $user->password    = bcrypt($request['password']);
         $user->color_dueno = $request['color_dueno'];
+        $user->estado      = "Activo";
         $user->save();
 
         $crias = new CriasTotal();
@@ -72,8 +73,7 @@ class UserController extends Controller
         $crias->save();
 
 
-        $users = User::get();
-        return view('users.index')->with('users', $users);
+        return redirect('users/');
       }
 
 
@@ -155,8 +155,7 @@ class UserController extends Controller
         $user->save();
 
 
-        $users = User::get();
-        return view('users.index')->with('users', $users);
+        return redirect('users/');
       }
 
     }
