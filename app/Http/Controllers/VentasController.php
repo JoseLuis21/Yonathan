@@ -81,6 +81,9 @@ class VentasController extends Controller
           $detalle_de_venta->subtotal = $detalle['total'];
           $detalle_de_venta->save();
 
+
+
+
         }
 
         return redirect()->route('ventas.index');
@@ -187,6 +190,16 @@ class VentasController extends Controller
     public function confirmar($id)
     {
       $venta          = Venta::find($id);
+
+      $detalleVentas = DetalleVenta::where('venta_id', '=', $id)->get();
+      
+      foreach ($detalleVentas as $key => $detalle) {
+
+        $criasTotales = CriasTotal::where('user_id', '=', $detalle['user_id'])->first();
+        $criasTotales->cantidad = $criasTotales->cantidad - $detalle['cantidad'];
+        $criasTotales->save();
+      }
+
       if(isset($venta)) {
         try {
           $venta->estado = 'Confirmada';
